@@ -1,7 +1,18 @@
-FROM golang:latest
+FROM golang:1.16-alpine AS build
 
 WORKDIR /app
-COPY . .
-RUN go build -o main.go .
 
-CMD ["./main"]
+# download the required Go dependencies
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+#COPY *.go ./
+COPY . ./
+
+RUN ls
+
+RUN go build -o /main .
+
+EXPOSE 8080
+
+CMD [ "/main" ]

@@ -1,0 +1,12 @@
+steps:
+- name: "golang:1.16-alpine"
+  args: ["go", "build", "-o", "main", "."]
+
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-t", "gcr.io/testmobileappteamcorebackend/teamcore:v1", "."]
+
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/testmobileappteamcorebackend/teamcore:v1"]
+
+images:
+- "gcr.io/testmobileappteamcorebackend/teamcore:v1"
